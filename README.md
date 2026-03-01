@@ -180,3 +180,7 @@ If an icon cannot be downloaded, the skill will skip it and continue with others
 3. **Color consistency**: Choose icons that match your design system
 4. **Error handling**: Implement proper error handling in production
 5. **Caching**: Consider caching downloaded icons for repeated use
+
+## License
+
+MIT License - See LICENSE file for details.
