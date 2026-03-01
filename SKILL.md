@@ -10,8 +10,8 @@ Use this skill for **downloading icons and images for WeChat Mini Program projec
 
 **Use it when you need to:**
 - Download TabBar icons for mini program
-- Download images from Icons8 API
-- Search and download icons with specific sizes
+- Download images from Icons8 API directly
+- Search and download icons with specific sizes and platforms
 - Download multiple icon sets for different states (normal/active)
 - Initialize new mini program projects with standard icon sets
 
@@ -26,7 +26,7 @@ Use this skill for **downloading icons and images for WeChat Mini Program projec
 
 ### download_icons(project_path, icon_configs, options={})
 
-Download icons for mini program projects with flexible configuration.
+Download icons for mini program projects with flexible configuration using Icons8 API.
 
 **Parameters:**
 - `project_path`: Path to mini program project directory
@@ -34,54 +34,54 @@ Download icons for mini program projects with flexible configuration.
 - `options`: Configuration options
 
 **Icon Configuration Object:**
-```javascript
+```python
 {
-  name: 'icon_name',           // Icon filename prefix
-  search_query: 'search term',  // Search query for Icons8
-  text: 'Tab text',           // TabBar text (optional)
-  size: 81,                   // Icon size (default: 81)
-  platform: 'fluent',         // Icon platform (default: 'fluent')
-  states: ['normal', 'active'] // Icon states to download (default: ['normal', 'active'])
+  "name": "icon_name",           # Icon filename prefix
+  "search_query": "search term",  # Search query for Icons8 API
+  "text": "Tab text",           # TabBar text (optional)
+  "size": 81,                   # Icon size (default: 81)
+  "platform": "ios",            # Icon platform (default: "ios")
+  "states": ["normal", "active"] # Icon states to download (default: ["normal", "active"])
 }
 ```
 
 **Options:**
-```javascript
+```python
 {
-  icon_dir: 'images',         // Icon directory (default: 'images')
-  naming convention: 'tab-{name}-{state}.png' // Filename pattern
+  "icon_dir": "images",         # Icon directory (default: "images")
+  "states": ["normal", "active"] # Icon states to download (default: ["normal", "active"])
 }
 ```
 
 **Example:**
-```javascript
-const icons = [
-  { name: 'ai', search_query: 'ai brain artificial intelligence', text: 'AI创作' },
-  { name: 'dev', search_query: 'code programming developer', text: '开发工具' },
-  { name: 'text', search_query: 'text document editing', text: '文本工具' },
-  { name: 'material', search_query: 'library collection folder', text: '素材库' }
-];
+```python
+icons = [
+  { "name": "ai", "search_query": "ai brain artificial intelligence", "text": "AI创作" },
+  { "name": "dev", "search_query": "code programming developer", "text": "开发工具" },
+  { "name": "text", "search_query": "text document editing", "text": "文本工具" },
+  { "name": "material", "search_query": "library collection folder", "text": "素材库" }
+]
 
-await download_icons('d:/code_project/AI-work-proj/ai-work-mini/miniprogram', icons);
+download_icons("d:/code_project/AI-work-proj/ai-work-mini/miniprogram", icons)
 ```
 
 ### search_icons(query, size=81, platform='fluent', amount=1)
 
-Search for icons from Icons8 API.
+Search for icons using Icons8 API.
 
 **Parameters:**
 - `query`: Search term for the icon
 - `size`: Size of the icon in pixels (default: 81)
-- `platform`: Icon platform/style (default: 'fluent')
+- `platform`: Icon platform/style (default: 'ios')
 - `amount`: Number of results to return (default: 1)
 
 **Returns:**
-Array of icon objects with URL and metadata.
+List of icon objects with URL and metadata.
 
 **Example:**
-```javascript
-const icons = await search_icons('settings', 81, 'fluent', 3);
-console.log(icons);
+```python
+icons = search_icons("settings", 81, "ios", 3)
+print(icons)
 ```
 
 ### download_icon(url, output_path)
@@ -93,9 +93,9 @@ Download a single icon from URL to specified path.
 - `output_path`: Output file path
 
 **Example:**
-```javascript
-const iconUrl = 'https://img.icons8.com/ios/100/8C8C8C/settings.png';
-await download_icon(iconUrl, 'path/to/icons/settings.png');
+```python
+iconUrl = "https://img.icons8.com/ios/100/8C8C8C/settings.png"
+download_icon(iconUrl, "path/to/icons/settings.png")
 ```
 
 ---
@@ -115,47 +115,46 @@ pip install requests
 
 ### Download TabBar icons for a mini program
 
-```javascript
-const { download_icons } = require('@codebuddy/skills/miniprogram-icon-downloader');
+```python
+from miniprogram_icon_downloader import download_icons
 
-const tabs = [
-  { name: 'ai', text: 'AI创作', search_query: 'ai brain artificial intelligence' },
-  { name: 'dev', text: '开发工具', search_query: 'code programming developer' },
-  { name: 'text', text: '文本工具', search_query: 'text document editing' },
-  { name: 'material', text: '素材库', search_query: 'library collection folder' }
-];
+tabs = [
+  { "name": "ai", "text": "AI创作", "search_query": "ai brain artificial intelligence" },
+  { "name": "dev", "text": "开发工具", "search_query": "code programming developer" },
+  { "name": "text", "text": "文本工具", "search_query": "text document editing" },
+  { "name": "material", "text": "素材库", "search_query": "library collection folder" }
+]
 
-await download_icons('path/to/your/mini-program', tabs);
+download_icons('path/to/your/mini-program', tabs)
 ```
 
 ### Download custom icons with different sizes
 
-```javascript
-const { download_icons } = require('@codebuddy/skills/miniprogram-icon-downloader');
+```python
+from miniprogram_icon_downloader import download_icons
 
-const customIcons = [
-  { name: 'home', search_query: 'home house', size: 64 },
-  { name: 'profile', search_query: 'user profile', size: 64 },
-  { name: 'settings', search_query: 'settings gear', size: 64 }
-];
+customIcons = [
+  { "name": "home", "search_query": "home house", "size": 64 },
+  { "name": "profile", "search_query": "user profile", "size": 64 },
+  { "name": "settings", "search_query": "settings gear", "size": 64 }
+]
 
-await download_icons('path/to/your/mini-program', customIcons, {
-  icon_dir: 'assets/icons',
-  states: ['normal']
-});
+download_icons('path/to/your/mini-program', customIcons, {
+  "icon_dir": "assets/icons",
+  "states": ["normal"]
+})
 ```
 
 ### Search and download icons manually
 
-```javascript
-const { search_icons, download_icon } = require('@codebuddy/skills/miniprogram-icon-downloader');
+```python
+from miniprogram_icon_downloader import search_icons, download_single_icon
 
-// Search for icons
-const icons = await search_icons('camera', 81, 'fluent', 5);
-if (icons.length > 0) {
-  // Download first result
-  await download_icon(icons[0].url, 'path/to/icons/camera.png');
-}
+# Search for icons
+icons = search_icons("camera", 81, "ios", 5)
+if len(icons) > 0:
+  # Download first result
+  download_single_icon(icons[0]["url"], "camera", "path/to/icons")
 ```
 
 ---
@@ -197,11 +196,9 @@ If an icon cannot be downloaded, the skill will skip it and continue with others
 ## Dependencies
 
 - **curl**: Must be available in the system
-- **Node.js**: v14 or higher
-- **Icons8 API access**: Through MCP server
-- **child_process**: For executing curl
-- **fs**: For file system operations
-- **path**: For path manipulation
+- **Python 3.7+**: Must be installed
+- **requests**: `pip install requests`
+- **Icons8 API access**: Direct API access to https://api.icons8.com
 
 ---
 
